@@ -5,6 +5,8 @@ index.php
 Cupcake order form
 -->
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 $flavors = array(
     'grasshopper' => 'The Grasshopper',
     'maple' => 'Whiskey Maple Bacon',
@@ -14,6 +16,8 @@ $flavors = array(
     'lemon' => 'Lemon Drop',
     'tiramisu' => 'Tiramisu'
 );
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -25,20 +29,23 @@ $flavors = array(
     <title>Cupcakes</title>
 </head>
 <body>
-<!--form with name, flavor checkboxes and order button-->
-<form method="get">
+<form method="get" action="">
     <h2>Cupcake order form</h2>
     <label> Name:
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" <?php if(isset($_GET['name'])){echo "value='$_GET[name]'";}?>>
     </label>
-    <br>
+    <p>Cupcake Flavors</p>
     <?php
         foreach ($flavors as $key => $val)
         {
             echo
             "<label>
-                <input type='checkbox' name='$key' id='$key'";
-            if(isset($_GET[$key]))
+                <input type='checkbox' name = 'cupcakes[]' value='$key' id='$key'";
+            if(!isset($_GET["cupcakes"]))
+            {
+                $_GET["cupcakes"] = array();
+            }
+            if(in_array($key, $_GET['cupcakes']))
             {
                 echo "checked='checked'";
             }
