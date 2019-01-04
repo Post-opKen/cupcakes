@@ -26,13 +26,25 @@ $flavors = array(
 </head>
 <body>
 <!--form with name, flavor checkboxes and order button-->
-<form>
+<form method="get">
     <h2>Cupcake order form</h2>
     <label> Name:
         <input type="text" name="name" id="name">
     </label>
+    <br>
     <?php
-
+        foreach ($flavors as $key => $val)
+        {
+            echo
+            "<label>
+                <input type='checkbox' name='$key' id='$key'";
+            if(isset($_GET[$key]))
+            {
+                echo "checked='checked'";
+            }
+            echo "> $val <br>
+            </label>";
+        }
     ?>
     <button type="submit">Submit</button>
 </form>
