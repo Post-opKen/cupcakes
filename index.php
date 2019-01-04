@@ -16,10 +16,6 @@ $flavors = array(
     'lemon' => 'Lemon Drop',
     'tiramisu' => 'Tiramisu'
 );
-/*Ensure that a name is provided, and that at least one checkbox is selected.
-Additionally, verify that the values submitted for cupcake flavors are valid, and that you haven’t been spoofed.
-If there are any errors,display an appropriate message on the form page.
-The form should be sticky*/
 
 if (!empty($_GET)) {
     $isValid = true;
@@ -46,7 +42,6 @@ if (!empty($_GET)) {
         }
     }
 }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,9 +57,23 @@ if (!empty($_GET)) {
     <h2>Cupcake order form</h2>
     <?php
     //display errors
-    if (!empty($_GET) && !$isValid) {
-        echo $errMessage;
+    if (!empty($_GET)) {
+        if ($isValid) {
+            $total = number_format(count($_GET['cupcakes']) * 3.50, 2);
+            echo "<p>Thank you, {$_GET['name']}, for your order!</p>";
+            echo "<ul>Order Summary:";
+            foreach ($_GET['cupcakes'] as $cupcake)
+            {
+                echo "<li>$flavors[$cupcake]</li>";
+            }
+            echo "</ul>";
+            echo "<p>Order total: \$$total</p>";
+        } else {
+            echo $errMessage;
+        }
     }
+
+    //
     ?>
     <label> Name:
         <input type="text" name="name" id="name" <?php if (isset($_GET['name'])) {
